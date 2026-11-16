@@ -1,0 +1,20 @@
+{
+  "expo": {
+    "name": "Educarama",
+    "slug": "educarama-mobile",
+    "scheme": "educarama",
+    "version": "1.0.0",
+    "orientation": "default",
+    "userInterfaceStyle": "automatic",
+    "icon": "./assets/logo-educarama.png",
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "package": "ar.edu.leopoldomarechal.educarama"
+    },
+    "plugins": [
+      "expo-router"
+    ]
+  }
+}
