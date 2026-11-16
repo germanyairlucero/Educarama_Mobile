@@ -1,0 +1,83 @@
+﻿MVP,Epica,ID,Tarea,Estado,Observaciones
+MVP0,Base,B01,Diseño y diagramación UML de la arquitectura del sistema,Parcial,Arquitectura implementada y descrita en docs/descripcion-tecnica.md. Confirmar que exista el diagrama UML como archivo entregable.
+MVP0,Base,B02,Modelado del Diagrama Entidad-Relación (DER) de la base de datos,Hecho,database/educarama.sql con todas las tablas y relaciones.
+MVP0,Base,B03,Refactor v2: rediseño completo de la arquitectura en capas (Model / Repository / Service / Controller / Vista),Hecho,"Reescritura completa del backend sobre el código legacy. 31 Models, Repositories, Services, Controllers y vistas nuevas. El código viejo quedó en _legacy/ como referencia. Rama refactor/v2."
+MVP0,Base,B04,Refactor v2.1: inyección de dependencias con Composition Root,Hecho,Se introdujo el contenedor de dependencias (src/Contenedor.php) y el Composition Root (src/main.php). Cada clase recibe sus dependencias por constructor. Las vistas se reconstruyeron para usar el contenedor. Rama refactor/v2.1.
+MVP0,Base,B05,Documentación técnica del proyecto,Hecho,"docs/descripcion-tecnica.md, docs/fundamentos-y-decisiones.md, docs/explicacion-de-cambios.md."
+MVP0,Base,B06,Diseño del esquema de base de datos (educarama.sql),Hecho,"Tablas estáticas, dinámicas y de progresión. Convención snake_case, singular, utf8mb4_spanish_ci."
+MVP0,Base,B07,Autoload propio con spl_autoload_register (sin Composer),Hecho,config/bootstrap.php. Regla PSR-4: namespace = carpeta.
+MVP0,Base,B08,Configuración centralizada (config.php y config.local.php),Hecho,"BASE_URL, zona horaria, datos de conexión. config.local.php en .gitignore para cada máquina."
+MVP1,Gestion Educadores,E01,Registro de usuario nuevo,Hecho,registro.php. Email único en minúsculas. Contraseña versión B (mínimo 6) para pruebas; versión A lista para producción.
+MVP1,Gestion Educadores,E02,Inicio de sesión,Hecho,login.php. Mensaje único 'Email o contraseña incorrectos.' sin revelar si el email existe. Redirección con ?volver=.
+MVP1,Gestion Educadores,E03,Cierre de sesión,Hecho,usuario.cerrarSesion en api.php. Destruye la sesión y vuelve al login.
+MVP1,Gestion Educadores,E04,Modificar datos de cuenta,Parcial,mi_cuenta.php. Solo existe usuario.cambiarContrasenia. Verificar si permite cambiar nombre y email.
+MVP1,Gestion Educadores,E05,Dar de baja al usuario,Pendiente,Baja lógica con respaldo de 1 mes: diferida a una versión futura.
+MVP1,Gestion Educadores,E06,Restablecer contraseña,Pendiente,Necesita envío de emails. token_recuperacion reservado en la tabla usuario.
+MVP1,Gestion Educadores,E07,Validación de email,Pendiente,email_validado siempre en false. Necesita envío de emails.
+MVP1,Gestion Educadores,E08,Validación de Grupo Scout con Cruz del Sur,Pendiente,Hoy solo se valida código no repetido. La integración con Cruz del Sur está diferida (ValidadorCruzDelSur).
+MVP1,Gestion Educadores,E09,Gestión de roles y permisos por sección,Hecho,"PermisoService. Supervisor, Ayudante, Responsable, Jefe. Sin acceso = 404; con acceso insuficiente = 403."
+MVP1,Gestion Educadores,E10,Panel de inicio del educador,Hecho,"inicio.php. Muestra grupos con próximos eventos; sin accesos, el estado de la solicitud de alta."
+MVP1,Gestion Educadores,E11,Menú lateral contextual,Hecho,"Drawer offcanvas de Bootstrap. Grupos, secciones y links según el rol. Se recuerda abierto/cerrado en localStorage."
+MVP1,Gestion Protagonistas,P01,Formulario de alta y edición de protagonista,Hecho,"protagonista_form.php. DNI, nombre y apellido obligatorios. Fecha de nacimiento y año de ingreso opcionales."
+MVP1,Gestion Protagonistas,P02,Alta de nuevo protagonista,Hecho,"DNI único en persona; si ya existe, se rechaza."
+MVP1,Gestion Protagonistas,P03,Modificar datos del protagonista,Hecho,Responsable o Jefe. Incluye el cambio de patrulla.
+MVP1,Gestion Protagonistas,P04,Eliminar protagonista,Hecho,"Solo Jefe. Cascada: progresión, documentos y vínculos. La persona queda."
+MVP1,Gestion Protagonistas,P05,Carga y almacenamiento de documentación adjunta,Hecho,"Almacen + DocumentoService + descargar.php. PDF, JPG y PNG hasta 5 MB."
+MVP2,Base,B09,Datos de ejemplo para desarrollo (datos_ejemplo.sql),Hecho,"2 grupos, 60 protagonistas, familiares, eventos, un usuario por caso de permisos. Contraseña educarama123."
+MVP2,Base,B10,Catálogo de competencias y acciones del programa,Hecho,"186 competencias y 848 acciones en database/seeds/catalogo_competencias.sql, transcritos desde los libros oficiales."
+MVP2,Gestion Educadores,E12,Administrar accesos de grupo y sección,Hecho,"accesos.php. Jefe de grupo: agrega, cambia y quita. Jefe de sección: solo cambia roles hasta Responsable. Último Jefe protegido."
+MVP2,Gestion Educadores,E13,Gestión de solicitudes de alta por el administrador,Hecho,solicitudes.php. Solo admin. Aprobar o rechazar con motivo obligatorio.
+MVP2,Gestion Protagonistas,P06,Visualización de tarjetas de protagonistas por sección,Hecho,protagonistas.php?id_seccion=.
+MVP2,Gestion Protagonistas,P07,Perfil individual con resumen de progresión,Hecho,"perfil_protagonista.php. Dos pestañas: Perfil (datos, resumen, familiares) y Documentos."
+MVP2,Gestion Protagonistas,P08,Nómina general en tabla,Hecho,protagonistas.php sin parámetro. Columnas fijas y filtros independientes. Filtros encadenados y columnas personalizables pendientes (ver N01).
+MVP2,Gestion Protagonistas,P09,Pase de protagonista a otra sección del mismo grupo,Hecho,ProtagonistaService. Con Responsable en ambas secciones. Queda sin patrulla; progresión anterior como historial.
+MVP2,Gestion Protagonistas,P10,"Gestión de patrullas (crear, renombrar, asignar integrantes y eliminar)",Hecho,"patrullas.php, perfil_patrulla.php. Nombre único por sección. Solo en ramas con pequenio_equipo."
+MVP2,Gestion Protagonistas,P11,Gestión de familiares del protagonista,Hecho,"familiar_form.php y perfil_protagonista.php. Alta, edición, desvincular. DNI compartido con aviso. Contactos de emergencia primero."
+MVP2,Progresion,PR01,Pantalla de competencias con pestañas por área,Hecho,"gestionar_competencias.php. Una pestaña por área, con el estado y las acciones de cada competencia. Guardado inmediato por fetch."
+MVP2,Progresion,PR02,Avance de estado de competencia (Pendiente → En proceso → Desarrollada),Hecho,ProgresionService. Solo avanza con el botón principal; retroceder desde el menú ⋮ en modo Corregir.
+MVP2,Progresion,PR03,Gestión de acciones por competencia,Hecho,Casillas sí/no dentro de cada competencia. Rovers no las muestra.
+MVP2,Progresion,PR04,Confirmar y quitar etapas logradas,Hecho,"progresion.php. Pide cupo y tareas (salteables); bloquea si falta la anterior. En Caminantes exige elemento. Quitar: solo Jefe, solo la última."
+MVP2,Progresion,PR05,Registro manual de insignias con fecha de entrega,Hecho,"progresion.php. Insignia de la rama o general, fecha no futura. Quitar: solo Jefe."
+MVP2,Progresion,PR06,Aviso de insignia pendiente al iniciar una etapa,Hecho,Solo un aviso en pantalla. Nada automático.
+MVP2,Progresion,PR07,"Alertas y sugerencias de progresión (cupo, acciones, etapa)",Hecho,"Cupo excedido, acciones sin cumplir, sugerencia de confirmar etapa. Todo salteable con confirmación."
+MVP2,Progresion,PR08,Gestión de especialidades del protagonista,Hecho,progresion.php. Solo en Lobatos y Lobeznas y en Scouts.
+MVP2,Gestion Eventos,EV01,"Gestión de eventos (crear, editar, desactivar, eliminar)",Hecho,eventos.php y evento_form.php. Alcance: todo el grupo o algunas secciones. Permisos por rol.
+MVP2,Gestion Eventos,EV02,Próximos eventos en inicio y perfil de sección,Hecho,"Activos que no terminaron, desde hoy. Respeta zona horaria."
+MVP2,Interfaz/UI,U01,"Layout base, cabecera y pie",Hecho,"Se resolvió con menú lateral drawer, no con barra inferior. Responsive desde 992 px."
+MVP2,Interfaz/UI,U02,Filtros básicos en nómina general,Parcial,"Filtros de grupo, sección, rama y búsqueda por nombre. Independientes entre sí. Los encadenados son tarea N01."
+MVP2,Interfaz/UI,U03,Identidad visual alineada al manual de marca de Scouts de Argentina,Hecho,"Plan T1–T7 de docs/prompt-imagen-de-marca.md. Variables de color, clases de rama, tipografía Ubuntu, contraste verificado."
+MVP2,Interfaz/UI,U04,Componente visual de progresión (gráfico del lobo fraccionado),Pendiente,Solo hay contadores numéricos. El gráfico es propio de Lobatos y Lobeznas; definir equivalente para las otras ramas.
+MVP2,Interfaz/UI,U05,Franja de insignias en la parte superior del perfil,Parcial,Las insignias se ven en progresion.php. En el perfil solo está el resumen. Falta la franja visual arriba.
+MVP2,Interfaz/UI,U06,Alternancia entre vista de tarjetas y vista de tabla en nóminas,Parcial,"Hay tarjetas en la sección y tabla en la general, pero no una alternancia con botón. Definir si se implementa."
+MVP2,Base,B11,Manejo integral de errores en la plataforma,Hecho,"Respuesta::desdeExcepcion. 401, 403, 404, 409, 413, 422, 500. Mensaje genérico al usuario; detalle a error_log."
+MVP2,Base,B12,Solicitud de alta de grupo scout (formulario),Hecho,"solicitud_alta.php. Código y nombre del grupo, secciones con nombre y rama. Una sola pendiente por usuario."
+MVP2,Base,B13,Aprobación de solicitud y creación de grupo y secciones,Hecho,solicitudes.php. Admin aprueba: se crean grupo y secciones; el solicitante queda como Jefe del grupo.
+MVP3,Administracion,A01,Solicitar alta de sección (agregar sección a un grupo existente),Pendiente,Las secciones hoy solo nacen al aprobar la solicitud de alta del grupo.
+MVP3,Base,B14,Exportación a PDF y hojas de cálculo (competencias y nóminas),Pendiente,No existe. CSV se puede generar desde PHP. PDF con vista de impresión del navegador (evita sumar librería).
+MVP3,Base,B15,Adaptación para uso parcial en entornos de baja conectividad,Pendiente,No hay service worker ni caché offline. Solo respaldo a cuadros nativos si falla SweetAlert2.
+MVP3,Gestion Educadores,E14,Perfiles de solo lectura para familiares y protagonistas,Pendiente,Hoy el protagonista no es usuario y los familiares son solo datos. Requiere decisión de diseño.
+MVP3,Gestion de Proyectos,PY01,Sistema integral de notificaciones para usuarios,Pendiente,Depende del envío de emails (diferido). Hoy hay avisos en pantalla y mensajes Flash.
+MVP3,Gestion de Proyectos,PY02,Pestaña Proyecto en la sección,Fuera del alcance,Por feedback de futuros usuarios se decidió posponer a una versión futura.
+MVP3,Gestion de Proyectos,PY03,Crear proyecto,Fuera del alcance,Por feedback de futuros usuarios se decidió posponer a una versión futura.
+MVP3,Gestion de Proyectos,PY04,Plantilla de proyecto,Fuera del alcance,Por feedback de futuros usuarios se decidió posponer a una versión futura.
+MVP3,Gestion de Proyectos,PY05,Modificar proyecto,Fuera del alcance,Por feedback de futuros usuarios se decidió posponer a una versión futura.
+MVP3,Gestion de Proyectos,PY06,Eliminar o concluir proyecto,Fuera del alcance,Por feedback de futuros usuarios se decidió posponer a una versión futura.
+MVP3,Gestion de Proyectos,PY07,Asignar proyecto a secciones,Fuera del alcance,Por feedback de futuros usuarios se decidió posponer a una versión futura.
+MVP3,Gestion de Proyectos,PY08,Asignar protagonista a proyecto,Fuera del alcance,Por feedback de futuros usuarios se decidió posponer a una versión futura.
+MVP3,Gestion de Proyectos,PY09,Gestionar ciclos de programa,Fuera del alcance,Por feedback de futuros usuarios se decidió posponer a una versión futura.
+MVP3,Gestion de Proyectos,PY10,Plantilla de ciclo de programa,Fuera del alcance,Por feedback de futuros usuarios se decidió posponer a una versión futura.
+MVP3,Gestion de Proyectos,PY11,Calendario interactivo para planificación de etapas y eventos,Fuera del alcance,Por feedback de futuros usuarios se decidió posponer a una versión futura.
+MVP3,Gestion de Proyectos,PY12,Plantilla de Oportunidades de Aprendizaje,Fuera del alcance,Por feedback de futuros usuarios se decidió posponer a una versión futura.
+MVP3,Interfaz/UI,U07,Indicador de Promesa Scout en nóminas,Parcial,Se ve en el perfil como badge. Falta como columna en la nómina (prevista en N01).
+MVP3,Interfaz/UI,U08,Panel de alertas y adeudado del protagonista,Parcial,El resumen de progresión ya trae lo adeudado y el aviso de insignia; falta un panel visual unificado.
+MVP3,Interfaz/UI,U09,"Optimización de accesibilidad (contraste, foco, teclado)",Parcial,"Contraste 4.5:1, foco 3:1 y aria-sort aplicados. Falta revisión de tamaño de letra y navegación completa con teclado."
+MVP3,Interfaz/UI,N01,"Nóminas con columnas personalizables, orden por columna y filtros encadenados",Pendiente,"Especificada en detalle (nomina.js). Incluye Promesa, orden por cualquier columna, filtros encadenados grupo→sección→rama y contador 'Mostrando X de Y'."
+MVP1,Gestion Educadores,OBS01,Módulo de alta para nuevos educadores (genérico),Obsoleto,"Reemplazada por E01 (Registro), B12 (Solicitud de alta de grupo) y B13 (Aprobación). Era ambigua y cubría tres tareas distintas."
+MVP1,Gestion Protagonistas,OBS02,Pestañas de datos para subir (duplicaba la carga de documentación),Obsoleto,Reemplazada por P05 (Carga y almacenamiento de documentación adjunta).
+MVP2,Gestion Protagonistas,OBS03,Desarrollo de la pantalla de nóminas (duplicaba el visualizador de nómina),Obsoleto,Reemplazada por P08 (Nómina general en tabla) y N01 (Nóminas personalizables).
+MVP2,Interfaz/UI,OBS04,"Visualizador de datos, competencias etc (duplicaba perfil y competencias)",Obsoleto,Reemplazada por P07 (Perfil individual) y PR01 (Pantalla de competencias).
+MVP2,Interfaz/UI,OBS05,Desarrollo de Layout principal y barra de navegación inferior,Obsoleto,Reemplazada por U01 (Layout base) y E11 (Menú lateral). Se optó por drawer lateral en vez de barra inferior.
+MVP1,Gestion Educadores,OBS06,Validación de Roles (Acceso a Ramas) — nombre incorrecto,Obsoleto,"Reemplazada por E09 (Gestión de roles y permisos por sección). Los roles son por sección, no por rama."
+MVP3,Administracion,OBS07,Alta de Rama — nombre incorrecto,Obsoleto,Reemplazada por A01 (Solicitar alta de sección). Las ramas son categorías fijas; lo que se da de alta es una sección.
+MVP3,Administracion,OBS08,"Solicitar Alta de Grupo Scout, formulario (duplicaba con MVP1)",Obsoleto,Reemplazada por B12 (Solicitud de alta de grupo). Era la misma funcionalidad.
+MVP3,Administracion,OBS09,Alta de Grupo Scout (Manual por los desarrolladores),Obsoleto,Reemplazada por B13 (Aprobación de solicitud). El proceso ya no es manual.
